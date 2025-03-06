@@ -1,0 +1,62 @@
+Pseudocode
+
+1. ===== Main Function **main**=====
+- Initialize menuOption to an empty string.
+- Loop until menuOption is "3":
+- Display the list of courses and their tuition fees.
+- Display the main menu.
+- Get user input for menu selection.
+- If menuOption is "1":
+- Call `tuitionCalcAll` to calculate tuition for all students.
+- If menuOption is "2":
+- Call `display_students` to display the list of students and get the selected student.
+- If the selected student index is valid:
+- Call `specificStudentCalc` to calculate tuition for the selected student.
+
+2. ===== Course Display Function **course_display**=====
+- Print the header for the course list.
+- Loop through the list of courses and tuition fees:
+- Print each course and its corresponding tuition fee.
+
+3. ===== Menu Function **menu**=====
+- Print the main menu options.
+
+4. ===== Tuition Calculation for All Students **tuitionCalcAll**=====
+- Initialize `totalTuition` to 0 and `studentTuitions` to an empty list.
+- Loop through the list of students:
+- Initialize `studentTuition` to 0 and `student_courses` to an empty list.
+- Loop through the list of courses:
+- Prompt the user to check if the student is taking the course.
+- If the response is 'y':
+- Add the course tuition to `studentTuition`.
+- Add the course and its tuition to `student_courses`.
+- Add the student and their total tuition to `studentTuitions`.
+- Add the student's total tuition to `totalTuition`.
+- Call `summery` to print the summary of student tuitions.
+
+5. ===== Summary Function **summery**=====
+- Print the header for the summary table.
+- Loop through the list of student tuitions:
+- Print each student's name and their total tuition.
+
+6. ===== Display Students Function **display_students**=====
+- Print the list of students.
+- Prompt the user to select a student by entering their number.
+- Return the index of the selected student.
+
+7. ===== Specific Student Calculation **specificStudentCalc**=====
+- Get the selected student's name.
+- Initialize `studentTuition` to 0 and `student_courses` to an empty list.
+- Print the header for checking courses.
+- Loop through the list of courses:
+- Prompt the user to check if the student is taking the course.
+- If the response is 'y':
+- Add the course tuition to `studentTuition`.
+- Add the course and its tuition to `student_courses`.
+- Call `tuition_statement` to print the tuition statement for the student.
+
+8. ===== Tuition Statement Function **tuition_statement**=====
+- Print the header for the tuition statement.
+- Loop through the list of student courses:
+- Print each course and its tuition fee.
+- Print the total tuition cost for the student.
