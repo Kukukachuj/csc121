@@ -30,7 +30,7 @@ def process_sales_row(row):
 # Main function to read the CSV file and process the data
 def main():
     # Open the sales.csv file and process rows
-    with open("sales.csv", "r") as file:
+    with open("M5lab/sales.csv", "r") as file:
         reader = csv.reader(file)
         next(reader)  # Skip the header row
         for row in reader:
@@ -38,13 +38,14 @@ def main():
 
     # Display and write total sales by product
     display_totals("Total Sales by Product ID", products)
-    write_csv("total_sales.csv", "Product ID", "Total Sales", products)
-    write_txt("total_sales.txt", "Product ID Total Sales", products)
+    write_csv("M5lab/ProgramOutput/total_sales.csv", "Product ID", "Total Sales", products)
+    write_txt("M5lab/ProgramOutput/total_sales.txt", "Product ID Total Sales", products)
 
     # Display and write total sales by customer
     display_totals("Total Sales by Customer ID", customers)
-    write_csv("customer_sales.csv", "Customer ID", "Total Sales", customers)
-    write_txt("customer_sales.txt", "Customer ID Total Sales", customers)
+    write_csv("M5lab/ProgramOutput/customer_sales.csv", "Customer ID", "Total Sales", customers)
+    write_txt("M5lab/ProgramOutput/customer_sales.txt", "Customer ID Total Sales", customers)
+
 
 # Call the main function
 if __name__ == "__main__":
