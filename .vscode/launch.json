@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        
+      {
+        "type": "debugpy",
+        "request": "launch",
+        "name": "Launch Program",
+        "program": "${workspaceFolder}/${input:pythonFile}"
+      }
+    ],
+    "inputs": [
+      {
+        "type": "promptString",
+        "id": "pythonFile",
+        "description": "Enter the relative path to the Python file you want to debug (e.g., M5PRO/M5Pro_JamesMoore.py)"
+      }
+    ]
+  }
