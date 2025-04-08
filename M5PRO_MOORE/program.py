@@ -104,7 +104,7 @@ def calculate_tuition():
     
     # Loop over each course and ask if the student is taking it
     for course in courses:
-        answer = input("Is " + student " taking " + course + "? (y/n): ")
+        answer = input("Is " + student + " taking " + course + "? (y/n): ")
         if answer.lower() == "y":
             grade_input = input("Enter grade for " + course + ": ")
             try:

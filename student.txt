@@ -1,7 +1,7 @@
-Tuition statement for Diana Shepard
+Tuition statement for Jerom Williams
 Course                                  Tuition
 --------------------------------------------------
 ﻿MAT 035(Concepts of Algebra)           $460.00
-CTI 115(Computer System Foundations)    $520.98
+BAS 120 Intro to Analytics              $500.00
 --------------------------------------------------
-Total cost                              $980.98
+Total cost                              $960.00
