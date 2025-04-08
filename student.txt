@@ -1,0 +1,7 @@
+Tuition statement for Diana Shepard
+Course                                  Tuition
+--------------------------------------------------
+﻿MAT 035(Concepts of Algebra)           $460.00
+CTI 115(Computer System Foundations)    $520.98
+--------------------------------------------------
+Total cost                              $980.98
