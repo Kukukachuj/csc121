@@ -1,26 +1,35 @@
-def course_display(courses, tuition):
-    """
-    Display the list of courses and their corresponding tuition fees.
+import os
 
+
+
+
+        
+
+
+def display_avg_total_tuition():
+    filename = "stu_courses.txt"
+
+    if os.path.exists(filename):  # Check if the file exists
+        print("\nReading contents of 'stu_courses.txt'...\n")
+        with open(filename, "r") as file:
+            print(file.read())  # Display file content
+    else:
+        print("\nNo 'stu_courses.txt' file found. Please run Option 1 first to generate tuition data.")
+    
+def display_students(stu_names):
+    """
+    Display the list of students and prompt the user to select one.
+    
     Args:
-        courses (list): List of course names.
-        tuition (list): List of tuition fees corresponding to the courses.
+        stu_names (list): List of student names.
+    
+    Returns:
+        int: Index of the selected student.
     """
-    print(f"{'Course name':<40} {'Tuition':<10}")
-    print("-" * 50)
-    for i in range(len(courses)):
-        if i < len(tuition):
-            print(f"{courses[i]:<40} ${tuition[i]:<10}")
-    print("-" * 50)
+    print("List of students:")
+    for i, student in enumerate(stu_names):
+        print(f"{i+1}. {student}")
+    
+    student_choice = int(input("Select a student by entering their number: ")) -1
+    return student_choice
 
-def menu():
-    """
-    Main menu options.
-    """
-    print("-" * 20, " MENU ", "-" * 20)
-    print("1)  Select Courses, Course Grade and Calc Tuition")
-    print("2)  Calculate Tuition for Specific Student")
-    print("3)  Display Average and Total Tuition (All students)")
-    print("4)  Display Student Info")
-    print("5) Exit")
-    print("-" * 20, " MENU ", "-" * 20)
