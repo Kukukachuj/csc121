@@ -1,9 +1,0 @@
-Student Name         Average Grade   Tuition
-=======================================================
-Zakari Watson            87.00          $980.98
-Dominique Ross           0.00           $0.00
-Jerom Williams           98.00          $460.00
-Diana Shepard            98.00          $460.00
-Rashad Ahmed             0.00           $0.00
-Yoko Mayo                87.00          $783.88
-Susan Jones              75.50          $1020.98

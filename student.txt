@@ -1,7 +1,0 @@
-Tuition statement for Jerom Williams
-Course                                  Tuition
---------------------------------------------------
-﻿MAT 035(Concepts of Algebra)           $460.00
-BAS 120 Intro to Analytics              $500.00
---------------------------------------------------
-Total cost                              $960.00
