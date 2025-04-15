@@ -1,6 +1,9 @@
 
-"""
-Program: Course and Tuition Information System
+# 4/14/2025
+# CSC-121 m4Pro 
+# James Moore
+
+"""Program: Course and Tuition Information System
 Description:
   This program shows course information, lets you look up a course,
   and displays tuition details for students and for each course.
