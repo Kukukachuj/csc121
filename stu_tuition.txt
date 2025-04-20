@@ -1,0 +1,11 @@
+Student Name             # Courses      Tuition
+-------------------------------------------------------
+Zakari Watson            2              1304.86
+Jerom Williams           4              2264.86
+Dominique Ross           3              1764.86
+Diana Shepard            4              2264.86
+Yoko Mayo                1               460.00
+Rashad Ahmed             2               960.00
+Susan Jones              2              1283.88
+-------------------------------------------------------
+Overall Total:                         10303.32
