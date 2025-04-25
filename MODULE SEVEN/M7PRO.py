@@ -1,3 +1,5 @@
+import csv
+
 class Course:
     def __init__(self, code, description, tuition):
         self._code = code
@@ -19,17 +21,7 @@ class Course:
         else:
             print("Invalid tuition amount! Must be positive.")
 
-    def set_descrtiption(self, newValue):
-        if newValue > 0:
-            self._description = newValue
-        else:
-            print("inalid description")
-
-    def set_code(self, newValue):
-        if newValue > 0:
-            self._code = newValue
-        else:
-            print("invalid")
+   
                 
     def __repr__(self):
         return f"Course Code: {self._code} | Description: {self._description} | Tuition: ${self._tuition}"
@@ -46,11 +38,6 @@ class Student:
     def get_stu_courses(self):
         return self._stu_courses
     
-    def set_name(self, newValue):
-        if isinstance(newValue, str) and newValue.strip():  # Ensures it's a valid string
-            self._name = newValue
-        else:
-            print("Invalid name! Must be a non-empty string.")
 
     def set_stu_courses(self, new_course_code):
         if isinstance(new_course_code, str) and new_course_code.strip():
@@ -68,21 +55,16 @@ class Student:
                 enrolled_courses.append(f"Course {course_code} not found!")
         return enrolled_courses
 
+def write_students_to_csv(students, filename):
+    with open(filename, "w", newline="") as file:  # Use "w" to write data
+        writer = csv.writer(file)
+        writer.writerow(["Name", "Courses"])
+        for student in students:
+            writer.writerow([student.get_name(), ", ".join(student.get_stu_courses())])
 
 
 
-# Creating Course instances
-course1 = Course("CTI-110", "Intro to Programming", 500)
-course2 = Course("MAT-171", "Precalculus Algebra", 450)
 
-# Creating a dictionary of available courses
-course_list = {
-    "CTI-110": course1,
-    "MAT-171": course2
-}
+            
 
-# Creating a Student instance
-student1 = Student("James", ["CTI-110", "MAT-171", "ENG-101"])  # ENG-101 doesn't exist
-
-# Testing get_enrolled_courses()
-print(student1.get_enrolled_courses(course_list))  
+            
