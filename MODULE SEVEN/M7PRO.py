@@ -6,13 +6,31 @@ class Course:
 
     def get_tuition(self): 
         return self._tuition
+    
+    def get_description(self):
+        return self._description
+    
+    def get_code(self):
+        return self._code
 
     def set_tuition(self, newValue):
         if newValue > 0:
             self._tuition = newValue
         else:
             print("Invalid tuition amount! Must be positive.")
-        
+
+    def set_descrtiption(self, newValue):
+        if newValue > 0:
+            self._description = newValue
+        else:
+            print("inalid description")
+
+    def set_code(self, newValue):
+        if newValue > 0:
+            self._code = newValue
+        else:
+            print("invalid")
+                
     def __repr__(self):
         return f"Course Code: {self._code} | Description: {self._description} | Tuition: ${self._tuition}"
     
@@ -40,26 +58,31 @@ class Student:
         else:
             print("Invalid course code! Must be a non-empty string.")
 
-    def get_enrolled_courses(self,course_list):
+    def get_enrolled_courses(self, course_list):
+        enrolled_courses = []
         for course_code in self._stu_courses:
             if course_code in course_list:
                 course = course_list[course_code]
-                print(f"{course.get_code()} | {course.get_description()} | ${course.get_tuition()}")
+                enrolled_courses.append(f"{course.get_code()} | {course.get_description()} | ${course.get_tuition()}")
             else:
-                print(f"Course {course_code} not found!")
+                enrolled_courses.append(f"Course {course_code} not found!")
+        return enrolled_courses
 
+
+
+
+# Creating Course instances
+course1 = Course("CTI-110", "Intro to Programming", 500)
+course2 = Course("MAT-171", "Precalculus Algebra", 450)
+
+# Creating a dictionary of available courses
+course_list = {
+    "CTI-110": course1,
+    "MAT-171": course2
+}
 
 # Creating a Student instance
-student1 = Student("James")
+student1 = Student("James", ["CTI-110", "MAT-171", "ENG-101"])  # ENG-101 doesn't exist
 
-# Printing the student's name using the getter method
-print(student1.get_name())  # Expected output: "James"
-
-# Checking initial courses (should be empty)
-print(student1.get_stu_courses())  # Expected output: []
-
-# Adding a course using the setter method
-student1.set_stu_courses("CTI-110")
-
-# Checking if the course was added
-print(student1.get_stu_courses())  # Expected output: ["CTI-110"]
+# Testing get_enrolled_courses()
+print(student1.get_enrolled_courses(course_list))  
