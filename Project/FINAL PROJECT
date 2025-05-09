@@ -1,0 +1,369 @@
+# 5/1/2025
+# CSC-121 FINAL
+# James Moore
+# About:
+
+"""
+Dungeon Game
+
+This module implements a simple dungeon game where a player,
+selected from Warrior, Mage, or Rogue, explores a map of connected rooms.
+The player may encounter monsters or items, and engages in combat with monsters.
+"""
+
+import random
+
+# Base class for a player
+class player:
+    """
+    Represents a generic player in the game.
+
+    Attributes:
+        name (str): The player's name.
+        health (int): The player's current health.
+        strike (int): The base damage dealt by the player.
+        chance (int): The chance factor influencing critical hits or dodges.
+        shield (int): The player's shield value for defense.
+        xp (int): Experience points accumulated by the player.
+        level (int): The player's level.
+        inventory (list): Items held by the player.
+    """
+    def __init__(self, name, health, strike, shield, chance, xp, level):
+        self.name = name
+        self.health = health
+        self.strike = strike
+        self.chance = chance
+        self.shield = shield
+        self.xp = xp
+        self.level = level
+        self.inventory = []  # List to hold items
+
+    def perform_strike(self, monster):
+        """
+        Executes a strike on the monster.
+
+        Args:
+            monster (monster): The monster being attacked.
+
+        Returns:
+            str: Description of the attack and its result.
+        """
+        critical = random.random() < 0.2
+        damage = self.strike * 2 if critical else self.strike
+        monster.health -= damage
+        return f"You struck the {monster.name}! {'Critical hit!' if critical else ''} Dealing: {damage} damage. The monster now has  {monster.health} health."
+
+    def calc_damage(self, random_enemy):
+        """
+        Calculates the damage dealt to a monster.
+
+        Args:
+            random_enemy (monster): The enemy monster.
+
+        Returns:
+            tuple: Total damage as an integer and a boolean flag indicating a critical hit.
+        """
+        crit_chance = self.chance / 2
+        crit_multiplier = 2 if random.randint(1,100) <= crit_chance else 1
+        base_damage = self.strike * random.uniform(1.0, 1.5)
+        total_damage = max(1,(base_damage * crit_multiplier) - random_enemy.shield)
+        return round(total_damage), crit_multiplier == 2
+
+    def dodge_chance(self):
+        """
+        Determines if the player dodges an incoming attack.
+
+        Returns:
+            bool: True if the attack is dodged, False otherwise.
+        """
+        return random.randint(1, 100) <= (self.chance * 0.5)
+
+    def add_xp(self, amount):
+        """
+        Adds experience points to the player and levels up if needed.
+
+        Args:
+            amount (int): The experience points to add.
+        """
+        self.xp += amount
+        if self.xp >= 100:
+            self.level += 1
+            self.xp -= 100
+            self.health += 20
+            self.strike += 5
+            self.shield += 2
+            print(f"🎉 You leveled up! Now at level {self.level}.")
+
+    def use_item(self):
+        """
+        Uses an item from the player's inventory.
+        """
+        if not self.inventory:
+            print("No items in inventory!")
+            return
+        print("Inventory:")
+        for i, item in enumerate(self.inventory):
+            print(f"{i+1}: {item}")
+        try:
+            choice = int(input("Choose item to use: ")) - 1
+            if 0 <= choice < len(self.inventory):
+                item = self.inventory.pop(choice)
+                if item == "Potion":
+                    self.health += 30
+                    print("🧪 You used a Potion. +30 HP!")
+                else:
+                    print(f"Used {item} (no effect scripted yet)")
+            else:
+                print("Invalid choice.")
+        except ValueError:
+            print("Invalid input.")
+
+# Warrior subclass
+class Warrior(player):
+    """
+    Represents a Warrior type player.
+    """
+    def __init__(self):
+        super().__init__("Warrior", 120, 25, 20, 10, 0, 1)
+
+# Mage subclass
+class Mage(player):
+    """
+    Represents a Mage type player.
+    """
+    def __init__(self):
+        super().__init__("Mage", 80, 15, 10, 10, 0, 1)
+
+# Rogue subclass
+class Rogue(player):
+    """
+    Represents a Rogue type player.
+    """
+    def __init__(self):
+        super().__init__("Rogue", 100, 20, 15, 25, 0, 1)
+
+# Monster class
+class monster:
+    """
+    Represents a monster in the dungeon.
+
+    Attributes:
+        name (str): The monster's name.
+        strike (int): The monster's base damage.
+        shield (int): The monster's shield value.
+        chance (int): A factor for the monster's special abilities.
+        health (int): The monster's current health.
+        level (int): The monster's level.
+    """
+    def __init__(self, name, strike, shield, chance, health, level):
+        self.name = name
+        self.strike = strike
+        self.shield = shield
+        self.chance = chance
+        self.health = health
+        self.level = level
+
+    def strike_player(self, player):
+        """
+        Monster attacks the player.
+
+        Args:
+            player (player): The player being attacked.
+
+        Returns:
+            str: Description of the monster's attack.
+        """
+        damage = max(1, self.strike - player.shield)
+        player.health -= damage
+        return f"👹 The {self.name} strikes! You lose {damage} HP and have {player.health} HP left."
+
+    def is_defeated(self):
+        """
+        Checks if the monster is defeated.
+
+        Returns:
+            bool: True if the monster's health is 0 or less, otherwise False.
+        """
+        return self.health <= 0
+
+# List of monster instances
+monster_list = [
+    monster("Shadow Prowler", 12, 6, 10, 100, 1),
+    monster("Boneguard", 10, 16, 4, 100, 1),
+    monster("Ironfang Raider", 18, 12, 6, 100, 1),
+    monster("Wraithling", 8, 4, 6, 100, 1),
+    monster("Hexborn Specter", 8, 10, 12, 100, 1),
+    monster("Stonehide Brute", 14, 24, 4, 100, 1),
+    monster("Crimson Warden", 12, 18, 12, 100, 1),
+    monster("Stormcaller Revenant", 14, 8, 10, 100, 1),
+    monster("Titanborn Marauder", 30, 26, 8, 100, 1)
+]
+
+def get_random_enemy():
+    """
+    Returns a random monster from the monster_list.
+
+    Returns:
+        monster: A randomly selected monster.
+    """
+    return random.choice(monster_list)
+
+# Room class representing dungeon rooms
+class Room:
+    """
+    Represents a room in the dungeon.
+
+    Attributes:
+        name (str): The name of the room.
+        monster (monster): The monster inhabiting the room, if any.
+        item (str): An item present in the room, if any.
+        connections (dict): Directions to adjacent Room objects.
+    """
+    def __init__(self, name, monster=None, item=None):
+        self.name = name
+        self.monster = monster
+        self.item = item
+        self.connections = {}  # Dict to hold connections to other rooms
+
+    def connect(self, direction, room):
+        """
+        Connects this room to another room in a given direction.
+
+        Args:
+            direction (str): The direction (e.g., 'north', 'south').
+            room (Room): The room to connect.
+        """
+        self.connections[direction] = room
+
+    def enter(self, player):
+        """
+        Logic for when a player enters the room.
+
+        Args:
+            player (player): The player entering the room.
+        """
+        print(f"\nYou entered {self.name}.")
+        if self.monster:
+            return self.combat(player)
+        elif self.item:
+            print(f"🪙 You found a {self.item}!")
+            player.inventory.append(self.item)
+            self.item = None
+        else:
+            print("The room is empty.")
+
+    def combat(self, player):
+        """
+        Handles combat between the player and the monster.
+
+        Args:
+            player (player): The player engaged in combat.
+        """
+        print(f"⚔ A {self.monster.name} appears!")
+        while player.health > 0 and self.monster.health > 0:
+            action = input("Choose action (strike/use item): ").lower()
+            if action == "strike":
+                print(player.perform_strike(self.monster))
+            elif action == "use item":
+                player.use_item()
+                continue
+            else:
+                print("Invalid action.")
+                continue
+
+            if self.monster.is_defeated():
+                print(f"✅ You defeated the {self.monster.name}!")
+                player.add_xp(50)
+                self.monster = None
+                return
+            print(self.monster.strike_player(player))
+            if player.health <= 0:
+                print("💀 You have been defeated!")
+                exit()
+
+# Map class to organize rooms
+class Map:
+    """
+    Represents the dungeon map composed of interconnected rooms.
+
+    Attributes:
+        player (player): The player roaming through the map.
+        rooms (list): List of Room objects.
+        current (Room): The current room the player is in.
+    """
+    def __init__(self, player):
+        self.player = player
+        self.rooms = [Room(f"Room {i+1}") for i in range(9)]
+
+        # Randomly add monsters or items to rooms
+        for room in self.rooms:
+            if random.random() < 0.5:
+                room.monster = get_random_enemy()
+            elif random.random() < 0.3:
+                room.item = "Potion"
+
+        # Connect rooms in a 3x3 grid
+        for i in range(3):
+            for j in range(3):
+                idx = i * 3 + j
+                room = self.rooms[idx]
+                if i > 0:
+                    room.connect("north", self.rooms[(i-1)*3 + j])
+                if i < 2:
+                    room.connect("south", self.rooms[(i+1)*3 + j])
+                if j > 0:
+                    room.connect("west", self.rooms[i*3 + (j-1)])
+                if j < 2:
+                    room.connect("east", self.rooms[i*3 + (j+1)])
+        self.current = self.rooms[0]  # Start at Room 1
+
+    def move(self, direction):
+        """
+        Moves the player in the specified direction if possible.
+
+        Args:
+            direction (str): The direction to move (e.g., 'north', 'south').
+        """
+        direction = direction.lower()  # Ensure case-insensitive input
+        if direction in self.current.connections:
+            self.current = self.current.connections[direction]
+            self.current.enter(self.player)
+        else:
+            print("🚫 Can't go that way.")
+
+# Game startup logic
+print("Welcome to the Dungeon!")
+print("Choose your character:")
+print("1. Warrior\n2. Mage\n3. Rogue")
+
+char_choice = input("Enter choice: ")
+if char_choice == "1":
+    player_instance = Warrior()
+elif char_choice == "2":
+    player_instance = Mage()
+elif char_choice == "3":
+    player_instance = Rogue()
+else:
+    player_instance = Warrior()
+    print("Invalid choice. Defaulting to Warrior.")
+
+world = Map(player_instance)
+world.current.enter(player_instance)
+
+# Main game loop
+while player_instance.health > 0:
+    print("\n--- What would you like to do? ---")
+    print("1. Move (north, south, east, west)")
+    print("2. Use Item")
+    print("3. Check Status")
+    action = input("Choose: ").strip().lower()
+
+    if action in ["1", "move"]:
+        direction = input("Enter direction: ").lower()  # Convert input to lowercase
+        world.move(direction)
+    elif action in ["2", "use item"]:
+        player_instance.use_item()
+    elif action in ["3", "check status"]:
+        print(f"{player_instance.name} - HP: {player_instance.health}, Level: {player_instance.level}, XP: {player_instance.xp}, Inventory: {player_instance.inventory}")
+    else:
+        print("Invalid input.")
